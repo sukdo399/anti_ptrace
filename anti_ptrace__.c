@@ -12,12 +12,17 @@ int main()
     if(child == 0)
     {
         ptrace(PTRACE_TRACEME, 0, NULL, NULL);
-        execl("/bin/ls", "ls", NULL);
+        //execl("/bin/ls", "ls", NULL);
     }
     else
     {
         wait(NULL);
+
+        printf("exit, pid: %d \n", child);
+        ptrace(PTRACE_CONT, child, NULL, NULL);
+        return 0;
     }
+    system("ls");
 
     printf("exit, pid: %d \n", child);
 
